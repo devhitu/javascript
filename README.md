@@ -432,6 +432,69 @@ async function findAndSaveUser(Users){
 ## 2-1. 프로미스의 최고 장점을 아십니까
 
 
+😫초보자가 하는 실수: 콜백 =  무조건 비동기? ❌NO❌
+
+
+✅콜백은 비동기가 아님, 동기일 수도 아닐수 도 있음
+
+> 동기 콜백
+```
+calculator(function(x,y){return x + y},3,5)
+```
+
+
+> 비동기 콜백, 대표적인 예 `setTimeout`
+```
+setTimeout(()=>{
+ console.log('비동기 콜백')
+},1000)
+```
+
+> ↪ Promise __내용은 실행 되었지만 결과를 나중에 쓸 수 있는 것.__
+```
+const promise = new Promise((resolve, reject) => {
+ setTimeout(()=>{
+  resolve();
+ },1000)
+});
+```
+신나게 딴짓하다가 결과값을 꺼내고 싶을 때는 `promise.then((결괏값)=>{//결괏값 사용})`
+
+
+➕ 습관적으로 promise를 만들자마자 사용하고, catch도 붙이는 경우 
+```
+new Promise().then((결괏값) =>{
+ //결괏값 사용
+}).catch((에러) => {});
+```
+
+> promise all 사용 예제
+```
+const p1 = axios.get('sever address 1');
+const p2 = axios.get('sever address 2');
+const p3 = axios.get('sever address 3');
+const p4 = axios.get('sever address 4');
+const p5 = axios.get('sever address 5');
+const p6 = axios.get('sever address 6');
+
+Promise.all([p1,p2,p3,p4,p5,p6]).then((results) => {})
+```
+
+
+😥 prnmiseAll의 단점 : 하나라도 오류나면 catch로 넘어간다
+```
+Promise.all([p1,p2,p3,p4,p5,p6]).then((results) => {}).catch((error)=>{})
+```
+
+
+
+😎 So, __allSettled__ 사용✨
+```
+Promise.allSettled([p1,p2,p3,p4,p5,p6]).then((results) => {}).catch((error)=>{})
+
+//results에 각각의 📃성공여부를 표시해줌
+//후에 실패한 것만 필터링해서 다시 시도함👍
+```
 
 * * *
 ## 2-2. 비동기는 동시가 아니다. 순서의 문제다.
