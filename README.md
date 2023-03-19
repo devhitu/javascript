@@ -380,3 +380,71 @@ const z = () => {};
 
 
 
+* * *
+## 2-8. 노드 교과서 개정판 Promise, async/await
+🤷 프로미스란? 내용은 실행 되었지만 결과를 아직 반환하지 않은 객체
+> 실행해놓고 필요할때 꺼내쓰면 됨💌
+
+
+>  then을 붙이면 결과를 반환함(성공리턴값: resolved) / (실패리턴값: reject => catch로 연결)
+
+
+>  실행이 완료되지 않았으면 완료된 후에 Then 내부 함수가 실행됨
+
+
+➕ Promis all(배열): 여러 개의 프로미스를 동시에 실행
+```
+function findAndSaveUser(users){
+ Users.findOne({})
+  .then((user) => {
+   user.name = 'hitu';
+   return user.save();
+  })
+  .then((user) => {
+   return Users.findOne({gender : 'm'});
+  })
+  .then((user) => {
+   //생략
+  })
+}
+```
+프로미스는 위에서 아래로, 좌에서 우로 실행됨
+
+
+🤷 async(asynchronous[eɪˈsɪŋkrənəs]: 동시에 존재, 발생하지 않는) / await[əˈweɪt] (~을 기다리다)
+
+
+➕ AJAX(Asynchronous Javascript And XML)) ❗발음 유의❗
+
+```
+async function findAndSaveUser(Users){
+ let user = await.Users.findOne({});
+ user.name = 'hitu';
+ user = await user.save();
+ user = await Users.findOne({gender: 'm' })
+}
+```
+우에서 좌로 실행, 코드가 짧다는 장점
+
+
+> 
+* * *
+## 2-1. 프로미스의 최고 장점을 아십니까
+
+
+
+* * *
+## 2-2. 비동기는 동시가 아니다. 순서의 문제다.
+
+
+
+* * *
+## 2-3. 한번 비동기는 영원한 비동기
+
+
+
+* * *
+## 2-4. Promise에도 동기 부분이 있다!
+
+
+
