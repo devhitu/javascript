@@ -498,6 +498,41 @@ Promise.allSettled([p1,p2,p3,p4,p5,p6]).then((results) => {}).catch((error)=>{})
 
 * * *
 ## 2-2. 비동기는 동시가 아니다. 순서의 문제다.
+> 동시의 개념이 아닌 __순서__의 문제 
+
+> 😎한번 비동기는 영원한 비동기 😎
+
+```
+setTimeout(()=>{
+ console.log('a')
+},0)
+
+
+setTimeout(()=>{
+ console.log('b')
+},1000)
+
+
+setTimeout(()=>{
+ console.log('c')
+},2000)
+```
+// a, b, c 출력
+
+1. anonymous
+2. 첫번째 setTimeout 호출 후 빠져나감
+3. 두번째 setTimeout 호출 후 빠져나감
+4. 세번째 setTimeout 호출 후 빠져나감
+5. anonymous 빠져나감
+
+🔄[Event Loop](https://nodejs.org/ko/docs/guides/event-loop-timers-and-nexttick)
+
+👀제로초의 요약된 방식 -> 다음 세가지로 분석
+1. Background
+> Background란 ? 실제로 있는 개념이 아니라 제로초가 만든 추상적인 개념, 이 부분은 javascript가 아닌 javascript 엔진 또는 오히려 더 넓은 범위인 운영체제라고 생각하면 됨. 이 Background의 특징은 다른언어로 되어있는 부분이라고 볼 수 있음(javascript가 아니니까, c++일수도있고  c일수도 있고... 그래서 동시에 돌아갈 수 있음, javascript는 싱글쓰레드이기때문에 동시의 개념이 없기 때문 !) 누
+3. Macro task ✔
+4. micro task ✔
+
 
 
 
