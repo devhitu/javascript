@@ -586,20 +586,36 @@ console.log(a) // 5 ❌
 
 
 ```
-//❌promise가 아닌 아이들을
+//promise❌
 let a = 2;
 setTimeout(()=>{
  a = 5;
  console.log(a)
 },0)
 
-//🤙promise로 바꿈
+//promise⭕ 
 const p = new Promise((resolve, reject) => {
+
+  //함수(이 부분은 동기임)가 먼저 실행되고  p에 대입된다.
+  console.log('제일먼저') //1️⃣번째 출력
   setTimeout(()=>{
     a = 5;
-    console.log(a)
+    console.log(a) //3️⃣번째 출력
     resolve(a) //결괏값
   },0)
+});
+
+//딴짓
+//딴짓
+//딴짓
+//console.log('딴짓') 2️⃣번째 출력
+//딴짓
+//딴짓
+//...
+
+//promise 실행👴
+p.then((result) => {
+ console.log('result', result) //4️⃣번째 출력
 })
 ```
 
