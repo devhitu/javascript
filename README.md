@@ -437,13 +437,13 @@ async function findAndSaveUser(Users){
 
 ✅콜백은 비동기가 아님, 동기일 수도 아닐수 도 있음
 
-> 동기 콜백
+### 동기 콜백
 ```
 calculator(function(x,y){return x + y},3,5)
 ```
 
 
-> 비동기 콜백, 대표적인 예 `setTimeout`
+### 비동기 콜백, 대표적인 예 `setTimeout`
 ```
 setTimeout(()=>{
  console.log('비동기 콜백')
@@ -468,7 +468,7 @@ new Promise().then((결괏값) =>{
 }).catch((에러) => {});
 ```
 
-> promise all 사용 예제
+### promise all 사용 예제
 ```
 const p1 = axios.get('sever address 1');
 const p2 = axios.get('sever address 2');
@@ -481,14 +481,14 @@ Promise.all([p1,p2,p3,p4,p5,p6]).then((results) => {})
 ```
 
 
-😥 prnmiseAll의 단점 : 하나라도 오류나면 catch로 넘어간다
+### 😥 prnmiseAll의 단점 : 하나라도 오류나면 catch로 넘어간다
 ```
 Promise.all([p1,p2,p3,p4,p5,p6]).then((results) => {}).catch((error)=>{})
 ```
 
 
 
-😎 So, __allSettled__ 사용✨
+### 😎 So, __allSettled__ 사용✨
 ```
 Promise.allSettled([p1,p2,p3,p4,p5,p6]).then((results) => {}).catch((error)=>{})
 
@@ -500,7 +500,6 @@ Promise.allSettled([p1,p2,p3,p4,p5,p6]).then((results) => {}).catch((error)=>{})
 ## 2-2. 비동기는 동시가 아니다. 순서의 문제다.
 > 동시의 개념이 아닌 __순서__의 문제 
 
-> 😎한번 비동기는 영원한 비동기 😎
 
 ```
 setTimeout(()=>{
@@ -537,7 +536,7 @@ setTimeout(()=>{
 1. 이 부분은 javascript가 아닌 javascript 엔진 또는 오히려 더 넓은 범위인 운영체제라고 생각하면 됨. 
 2. 이 Background의 특징은 다른언어( c++일수도있고  c일수도 있음. 즉, ✨동시에 돌아갈 수 있음)로 되어있는 부분이라고 볼 수 있음
 3. javascript는 싱글쓰레드이기때문에 동시의 개념이 없음
-4. Background에 들어가는 것들 (예)setTimeout의 timer, promise, ajax요청, 이벤트리스너, 커스텀이벤트 등등...
+4. Background에 들어가는 것들 (예)setTimeout의 timer, promise, nextTick, ajax요청, eventListener, 커스텀이벤트 등등...
 
 ✔ Background로 간 코드는 반드시 task queue를 거친다
 
@@ -549,7 +548,36 @@ setTimeout(()=>{
 
 * * *
 ## 2-3. 한번 비동기는 영원한 비동기
+### Macro task & micro task에는 각자 누가 들어가나❔❔
 
+✔ 1. micro task : Promise, process.nextTick
+✔ 2. Macro task : 그 외 나머지(setTimeout, eventListener ..)
+ 
+ 
+😶 Macro task & micro task에 각각 들어간다면?
+1. 먼저 micro task 가 먼저 호출스택으로 끌어올림
+2. micro task가 꽉 차있으면 Macro task는 실행안됨❌
+
+
+```
+let a = 2;
+setTimeout(()=>{
+ a = 5;
+ console.log(a)
+ //비동기는 비동기 안에서만 코딩해야해
+ 
+  setTimeout(()=>{
+     setTimeout(()=>{
+        //그래서 callback hell 이 생기기도...
+     })
+  })
+},0)
+
+console.log(a) // 5 ❌
+
+// 2 5 가 차례로 나옴
+```
+😎한번 비동기는 영원한 비동기 😎 : 비동기 안으로 들어가면 무조건 비동기임
 
 
 * * *
