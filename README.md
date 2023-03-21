@@ -531,7 +531,19 @@ setTimeout(()=>{
 1. Background
 2. Macro task ✔
 3. micro task ✔
-> Background란 ? 실제로 있는 개념이 아니라 제로초가 만든 추상적인 개념, 이 부분은 javascript가 아닌 javascript 엔진 또는 오히려 더 넓은 범위인 운영체제라고 생각하면 됨. 이 Background의 특징은 다른언어로 되어있는 부분이라고 볼 수 있음(javascript가 아니니까, c++일수도있고  c일수도 있고... 그래서 동시에 돌아갈 수 있음, javascript는 싱글쓰레드이기때문에 동시의 개념이 없기 때문 !) 누
+
+
+👀 Background란 ? 실제로 있는 개념이 아니라 제로초가 만든 추상적인 개념
+1. 이 부분은 javascript가 아닌 javascript 엔진 또는 오히려 더 넓은 범위인 운영체제라고 생각하면 됨. 
+2. 이 Background의 특징은 다른언어( c++일수도있고  c일수도 있음. 즉, ✨동시에 돌아갈 수 있음)로 되어있는 부분이라고 볼 수 있음
+3. javascript는 싱글쓰레드이기때문에 동시의 개념이 없음
+4. Background에 들어가는 것들 (예)setTimeout의 timer, promise, ajax요청, 이벤트리스너, 커스텀이벤트 등등...
+
+✔ Background로 간 코드는 반드시 task queue를 거친다
+
+
+🕑setTimeout의 경우는 Macro task에 쌓임
+>그 후 호출스택이 비어있을때 함수를 호출스택에 끌어올려준다 ..차례로..FIFO
 
 
 
