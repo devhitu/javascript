@@ -581,7 +581,27 @@ console.log(a) // 5 ❌
 
 
 * * *
-## 2-4. Promise에도 동기 부분이 있다!
+## 2-4. 🤙Promise에도 동기 부분이 있다!
+### callback hell을 해결한 Promise도 hell이 존재하지 않을까?
+
+
+```
+//❌promise가 아닌 아이들을
+let a = 2;
+setTimeout(()=>{
+ a = 5;
+ console.log(a)
+},0)
+
+//🤙promise로 바꿈
+const p = new Promise((resolve, reject) => {
+  setTimeout(()=>{
+    a = 5;
+    console.log(a)
+    resolve(a) //결괏값
+  },0)
+})
+```
 
 
 
