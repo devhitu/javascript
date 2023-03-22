@@ -1,14 +1,35 @@
 # [인간 JS엔진 되기👩‍💻]
-> #### [ZeroCho TV 인간 JS 엔진 되기 (JS 고급 강좌)](https://www.youtube.com/playlist?list=PLcqDmjxt30Rt9wmSlw1u6sBYr-aZmpNB3)
+> #### [ZeroCho TV 인간 JS 엔진 되기 (JS 고급 강좌)](https://www.youtube.com/playlist?list=PLcqDmjxt30Rt9wmSlw1u6sBYr-aZmpNB3)  
+***
+
+## 목차
+[1-1 함수와 함수의 호출-고차함수](#1-1-함수와-함수의-호출-고차함수)  
+[1-2 자바스크립트 스펙 외우지 마세요](#1-2-자바스크립트-스펙-외우지-마세요)  
+[1-3 호출 스택 분석](#1-3-호출-스택-분석)  
+[1-4 스코프체인](#1-4-스코프체인)  
+[1-5 호이스팅](#1-5-호이스팅)  
+[1-6 this는 호출때 결정된다고](#1-6-this는-호출때-결정된다고)  
+[1-7 this를 분석할 수 없는 케이스](#1-7-this를-분석할-수-없는-케이스)  
+[1-8 블록 스코프와 매개변수](#1-8-블록-스코프와-매개변수)  
+[노드 교과서 개정판 promise async와 await](#노드-교과서-개정판-promise-async와-await)  
+[2-1 프로미스의 최고 장점을 아십니까](#2-1-프로미스의-최고-장점을-아십니까)  
+[2-2 비동기는 동시가 아니다 순서의 문제다](#2-2-비동기는-동시가-아니다-순서의-문제다)  
+[2-3 한번 비동기는 영원한 비동기](#2-3-한번-비동기는-영원한-비동기)  
+[2-4 promise에도 동기 부분이 있다](#2-4-promise에도-동기-부분이-있다)  
+[2-5 async와 await promise로 바꾸기](#2-5-async와-await-promise로-바꾸기)  
+[2-6 무지성 await 연달아쓰기 금지](#2-6-무지성-await-연달아쓰기-금지)  
+[2-7 프로미스 다양한 활용](#2-7-프로미스-다양한-활용)  
+[2-8 클로저closure 분석](#2-8-클로저closure-분석)  
+[개별 정리](#개별-정리)  
 * * *
 
 
 ## 1-1 함수와 함수의 호출, 고차함수
 ✔ 함수와 함수 호출의 차이
-```
+```js
  const add = (a,b) => a+b;
  function calculator(func,a,b){
-  return func(a,b);
+    return func(a,b);
  }
  
  add(3,5) //8
@@ -19,13 +40,12 @@
 
 
 함수에 호출()을 붙이면 함수가 실행된다 => 즉, **return값이 온다고 생각** 해야 함  
-`calculator(add(),3,5)`의 경우 `undefinded + undefined ` 이렇게 실행됨
-
+`calculator(add(),3,5)`의 경우 `undefinded + undefined ` 이렇게 실행됨  
 
 ‼__헌데 만약__‼  
  `document.querySelector('#header').addEventListener('click', onClick(event)); `에서
  
- ```
+ ```js
  //고차함수일 경우
  const onClick = () => (event) => {
    alert('addag')
@@ -50,7 +70,7 @@
 라면 return값이 있기때문에 ()을 붙여도됨  
 react에서도 다음과 같이 사용
 
-```
+```js
 const onClick = useCallback((e) =>{
   console.log(e.target)
 },[]);
@@ -64,7 +84,7 @@ return{
 
 ## 1-2 자바스크립트 스펙 외우지 마세요
 ✔ 공식스펙 다~ 보지말고 코드보고 해석하기👩‍💻 __나무보단 숲을 보장🌳__
-```
+```js
 //함수안에 선언들이 많을 경우
 const x = 'x'; 
 function c(){
@@ -114,7 +134,7 @@ __FIFO__ : FIRST IN FIRST OUT __선입선출__
 
 🏢 block 기준 {}  
 ➕ 객체는 ({})  
-```
+```js
 const x1 = 'x';
 function c(){
   const y = 'y';
@@ -141,7 +161,7 @@ c();
 
 __b의 경우는 c를 거쳐서 ... b → c → annoy__ 이걸 __Lexical Scope__(함수를 어디서 선언하였는지에 따라 상위 스코프를 결정하는 것)라 함
 
-```
+```js
 annony -> x1, c, a
 b -> z
 c -> y, b
@@ -158,7 +178,7 @@ a-> x2
 ✔ 선언은 가장 위에, 선언하기전 접근을 하지마  
 ✔ eslint 사용하면 호이스팅을 막을 수 있음
 
-```
+```js
 function a(){
   console.log(x); //TDZ :temporal dead zone 이런상황 피해...
   const x = 'x3'
@@ -166,7 +186,7 @@ function a(){
 ```
 
 ❔ 만약에~ 호이스팅이 있으면 우짜나...
-```
+```js
 var y; //이 선언 부분만 떼어서 위로 올려
 y = "hitu" //var 쓰지 않는 이유 : 코드분석 시 헷갈리게 만들고 직관적이지 않음
 
@@ -193,7 +213,7 @@ const x1 = 'x'; //나머지는 그상태 유지
 a(); 
 ```
 
-```
+```js
 function a(){
   console.log(z)
 }
@@ -209,11 +229,11 @@ const z = "z1"
 
 
 * * *
-## 1-6 this는 __호출__ 때 결정된다고!!!  
+## 1-6 this는 호출때 결정된다고!!!  
 ➕ js, node 최근에 globalThis 로 통합됨
 
 ✔ 함수 앞에 객체가 붙는다면 this는 그 객체가 됨  
-```
+```js
 const obj = {
    name: 'hitu',
    sayName(){ 
@@ -236,7 +256,7 @@ obj.sayName() ////hitu
 3. bind, apply, call로 this를 직접적으로 바꿔주는 경우 (예) `sayName.bind({name:'hitu'})()`
 
 
-```
+```js
 const obj ={
  name: 'hitu',
  sayName(){
@@ -255,7 +275,7 @@ inner() //공란 => this를 바꿔준게 없음
 
 
 ➡ arrow function, __화살표함수는 ❕부모❕함수❕의 this를 받는다..__
-```
+```js
 const obj ={
  name: 'hitu',
  sayName(){
@@ -281,7 +301,7 @@ SN() //window(기)가 됨
 
 * * *
 ## 1-7 this를 분석할 수 없는 케이스
-```
+```js
 header.addEventListner('click',function(){console.log(this + '는 ❗호출❗될때 정해진다')})
 ```
 다음과 같은 코드에서는 어디서 호출되는지 모름, 분석할수 없음
@@ -289,7 +309,7 @@ header.addEventListner('click',function(){console.log(this + '는 ❗호출❗�
 
 
 💭만약에 addEventListner를 만든다면  ~~ ?(추론)
-```
+```js
 const header = {
  addEventListner :function(eventName, callback){
   callback.call(this) //이렇게 썼을수도.. header가 곧 이벤트리스너의 this니까...
@@ -312,7 +332,7 @@ header.addEventListner('click',()=>{console.log(this)}) //addEventListner가 정
 
 * * *
 ## 1-8 블록 스코프와 매개변수
-```
+```js
 const x = true;
 const y = false;
 
@@ -334,34 +354,35 @@ const z = () => {};
 ```
 
 
-1-1. 선언 map 작성
-> annony -> a(function), x(true), y(false->true)
+1-1.   
 
-> a -> `let a = 4`
+|선언 map 작성||
+|:--- | :--- |
+|annony|a(function), x(true), y(false->true)|
+|a|`let a = 4`|
+|a if(x)|`let a = 3`|
+|a if(x)|for (i가 0부터 2까지 block scope가 3개가 생김)|  
 
-> a if(x) -> `let a = 3`
-
-> a if(x) for (i가 0부터 2까지 block scope가 3개가 생김)
 
 
-1-2. 호출스택 작성(아래서부터)
-> annoy, this는 window(만약 'use strict'모드라면 undefined)
-
-> a
-
-> z //선언을 안한상태에서 호출하면 __Error: z is not defined__
+1-2. 
+|호출스택 작성(아래서부터)|
+|:--- |
+|annoy, this는 window(만약 'use strict'모드라면 undefined)|
+|a|
+|z //선언을 안한상태에서 호출하면 __Error: z is not defined__|  
 
 
 
 * * *
-## 2-8. 노드 교과서 개정판 Promise, async/await
-🤷 프로미스란? 내용은 실행 되었지만 결과를 아직 반환하지 않은 객체
+## 노드 교과서 개정판 promise, async와 await
+🤷 프로미스란? 내용은 실행 되었지만 결과를 아직 반환하지 않은 객체  
 · 실행해놓고 필요할때 꺼내쓰면 됨💌  
 · then을 붙이면 결과를 반환함(성공리턴값: resolved) / (실패리턴값: reject => catch로 연결)  
 · 실행이 완료되지 않았으면 완료된 후에 Then 내부 함수가 실행됨  
 
 ➕ Promis all(배열): 여러 개의 프로미스를 동시에 실행
-```
+```js
 function findAndSaveUser(users){
  Users.findOne({})
   .then((user) => {
@@ -382,7 +403,7 @@ function findAndSaveUser(users){
 🤷 async(asynchronous[eɪˈsɪŋkrənəs]: 동시에 존재, 발생하지 않는) / await[əˈweɪt] (~을 기다리다)  
 ➕ AJAX(Asynchronous Javascript And XML)) ❗발음 유의❗
 
-```
+```js
 async function findAndSaveUser(Users){
  let user = await.Users.findOne({});
  user.name = 'hitu';
@@ -395,27 +416,27 @@ async function findAndSaveUser(Users){
 
 > 
 * * *
-## 2-1. 프로미스의 최고 장점을 아십니까
+## 2-1 프로미스의 최고 장점을 아십니까
 
 
 😫초보자가 하는 실수: 콜백 =  무조건 비동기? ❌NO❌  
 ✅콜백은 비동기가 아님, 동기일 수도 아닐수 도 있음  
 
 ### 동기 콜백
-```
+```js
 calculator(function(x,y){return x + y},3,5)
 ```
 
 
 ### 비동기 콜백, 대표적인 예 `setTimeout`
-```
+```js
 setTimeout(()=>{
  console.log('비동기 콜백')
 },1000)
 ```
 
 > ↪ Promise __내용은 실행 되었지만 결과를 나중에 쓸 수 있는 것.__
-```
+```js
 const promise = new Promise((resolve, reject) => {
  setTimeout(()=>{
   resolve();
@@ -426,14 +447,14 @@ const promise = new Promise((resolve, reject) => {
 
 
 ➕ 습관적으로 promise를 만들자마자 사용하고, catch도 붙이는 경우 
-```
+```js
 new Promise().then((결괏값) =>{
  //결괏값 사용
 }).catch((에러) => {});
 ```
 
 ### promise all 사용 예제
-```
+```js
 const p1 = axios.get('sever address 1');
 const p2 = axios.get('sever address 2');
 const p3 = axios.get('sever address 3');
@@ -446,14 +467,14 @@ Promise.all([p1,p2,p3,p4,p5,p6]).then((results) => {})
 
 
 ### 😥 prnmiseAll의 단점 : 하나라도 오류나면 catch로 넘어간다
-```
+```js
 Promise.all([p1,p2,p3,p4,p5,p6]).then((results) => {}).catch((error)=>{})
 ```
 
 
 
 ### 😎 So, __allSettled__ 사용✨
-```
+```js
 Promise.allSettled([p1,p2,p3,p4,p5,p6]).then((results) => {}).catch((error)=>{})
 
 //results에 각각의 📃성공여부를 표시해줌
@@ -461,11 +482,11 @@ Promise.allSettled([p1,p2,p3,p4,p5,p6]).then((results) => {}).catch((error)=>{})
 ```
 
 * * *
-## 2-2. 비동기는 동시가 아니다. 순서의 문제다.
+## 2-2 비동기는 동시가 아니다 순서의 문제다
 > 동시의 개념이 아닌 __순서__의 문제 
 
 
-```
+```js
 setTimeout(()=>{
  console.log('a')
 },0)
@@ -490,27 +511,28 @@ setTimeout(()=>{
 
 🔄[Event Loop](https://nodejs.org/ko/docs/guides/event-loop-timers-and-nexttick)
 
-👀제로초의 요약된 방식 -> 다음 세가지로 분석
+### 👀제로초의 요약된 방식 -> 다음 세가지로 분석
 1. Background
 2. Macro task ✔
-3. micro task ✔
+3. micro task ✔  
 
 
-👀 Background란 ? 실제로 있는 개념이 아니라 제로초가 만든 추상적인 개념
+### 👀 Background란 ? 실제로 있는 개념이 아니라 제로초가 만든 추상적인 개념
 1. 이 부분은 javascript가 아닌 javascript 엔진 또는 오히려 더 넓은 범위인 운영체제라고 생각하면 됨. 
 2. 이 Background의 특징은 다른언어( c++일수도있고  c일수도 있음. 즉, ✨동시에 돌아갈 수 있음)로 되어있는 부분이라고 볼 수 있음
 3. javascript는 싱글쓰레드이기때문에 동시의 개념이 없음
 4. Background에 들어가는 것들 (예)setTimeout의 timer, promise, nextTick, ajax요청, eventListener, 커스텀이벤트 등등...  
 
-✔ Background로 간 코드는 반드시 task queue를 거친다  
+✔ Background로 간 코드는 반드시 task queue를 거친다   
+🕑setTimeout의 경우는 Macro task에 쌓임  
 
-🕑setTimeout의 경우는 Macro task에 쌓임
->그 후 호출스택이 비어있을때 함수를 호출스택에 끌어올려준다 ..차례로..FIFO
+
+✔ 그 후 호출스택이 비어있을때 함수를 호출스택에 끌어올려준다 ..차례로..FIFO
 
 
 
 * * *
-## 2-3. 한번 비동기는 영원한 비동기
+## 2-3 한번 비동기는 영원한 비동기
 ### Macro task & micro task에는 각자 누가 들어가나❔❔
 
 ✔ 1. micro task : Promise, process.nextTick
@@ -522,7 +544,7 @@ setTimeout(()=>{
 2. micro task가 꽉 차있으면 Macro task는 실행안됨❌
 
 
-```
+```js
 let a = 2;
 setTimeout(()=>{
  a = 5;
@@ -544,11 +566,11 @@ console.log(a) // 5 ❌
 
 
 * * *
-## 2-4. 🤙Promise에도 동기 부분이 있다!
+## 2-4 promise에도 동기 부분이 있다
 ### callback hell을 해결한 Promise도 hell이 존재하지 않을까?
 
 
-```
+```js
 //promise❌
 let a = 2;
 setTimeout(()=>{
@@ -581,6 +603,26 @@ p.then((result) => {
  console.log('result', result) //4️⃣번째 출력
 })
 ```
+***
+## 2-5 async와 await, promise로 바꾸기 
+***
+## 2-6 무지성 await 연달아쓰기 금지
+***
+## 2-7 프로미스 다양한 활용 
+***
+## 2-8 클로저(closure) 분석
+
+***
+## 개별 정리  
+### 호출과 선언의 차이 
+### 스코프 체인이란?
+### 호이스팅 최적화
+### this의 결정시기
+### promise란?
+### async, await란?
 
 
-
+|용어                  | 정의                        |
+|:--- | ---: |
+|             |             |
+|            |            |
