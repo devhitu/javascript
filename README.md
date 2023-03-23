@@ -1,10 +1,10 @@
 # [인간 JS엔진 되기👩‍💻]
-> #### [ZeroCho TV 인간 JS 엔진 되기 (JS 고급 강좌)](https://www.youtube.com/playlist?list=PLcqDmjxt30Rt9wmSlw1u6sBYr-aZmpNB3)  
+> #### 출처: [ZeroCho TV 인간 JS 엔진 되기 (JS 고급 강좌)](https://www.youtube.com/playlist?list=PLcqDmjxt30Rt9wmSlw1u6sBYr-aZmpNB3)  
 ***
 
 ## 목차
 [1-1 함수와 함수의 호출-고차함수](#1-1-함수와-함수의-호출-고차함수)  
-[1-2 자바스크립트 스펙 외우지 마세요](#1-2-자바스크립트-스펙-외우지-마세요)  
+[1-2 자바스크립트 스펙 외우지 마세요](#1-2-자바스크립트-스펙-외우지-마세요)
 [1-3 호출 스택 분석](#1-3-호출-스택-분석)  
 [1-4 스코프체인](#1-4-스코프체인)  
 [1-5 호이스팅](#1-5-호이스팅)  
@@ -25,7 +25,7 @@
 
 
 ## 1-1 함수와 함수의 호출, 고차함수
-✔ 함수와 함수 호출의 차이
+🟥 함수와 함수 호출의 차이
 ```js
  const add = (a,b) => a+b;
  function calculator(func,a,b){
@@ -42,7 +42,7 @@
 함수에 호출()을 붙이면 함수가 실행된다 => 즉, **return값이 온다고 생각** 해야 함  
 `calculator(add(),3,5)`의 경우 `undefinded + undefined ` 이렇게 실행됨  
 
-‼__헌데 만약__‼  
+🟧‼__헌데 만약__‼  
  `document.querySelector('#header').addEventListener('click', onClick(event)); `에서
  
  ```js
@@ -83,7 +83,7 @@ return{
 
 
 ## 1-2 자바스크립트 스펙 외우지 마세요
-✔ 공식스펙 다~ 보지말고 코드보고 해석하기👩‍💻 __나무보단 숲을 보장🌳__
+🟥 공식스펙 다~ 보지말고 코드보고 해석하기👩‍💻 __나무보단 숲을 보장🌳__
 ```js
 //함수안에 선언들이 많을 경우
 const x = 'x'; 
@@ -129,7 +129,7 @@ __FIFO__ : FIRST IN FIRST OUT __선입선출__
 
 
 ## 1-4 스코프체인
-✔  함수에서 어떤값에 접근이 불/가능한가?
+🟥 함수에서 어떤값에 접근이 불/가능한가?
 
 
 🏢 block 기준 {}  
@@ -232,7 +232,7 @@ const z = "z1"
 ## 1-6 this는 호출때 결정된다고!!!  
 ➕ js, node 최근에 globalThis 로 통합됨
 
-✔ 함수 앞에 객체가 붙는다면 this는 그 객체가 됨  
+🟥 함수 앞에 객체가 붙는다면 this는 그 객체가 됨  
 ```js
 const obj = {
    name: 'hitu',
@@ -246,11 +246,11 @@ obj.sayName() ////hitu
 ```
 
 
-✔ 특별한 동작을 한게 없다면  
+🟧 특별한 동작을 한게 없다면  
 `console.log(this) //Window(~~~)` 
 
 
-✔ 기본적으로 this는 window인데 this가 바뀌는 경우
+🟨 기본적으로 this는 window인데 this가 바뀌는 경우
 1. 객체에 붙어서 메서드로 호출하는 경우
 2. new 붙여서 호출하는경우 (예) `function Human(name){this.name = name;}; new Human('hitu')`
 3. bind, apply, call로 this를 직접적으로 바꿔주는 경우 (예) `sayName.bind({name:'hitu'})()`
@@ -274,7 +274,7 @@ inner() //공란 => this를 바꿔준게 없음
 ```
 
 
-➡ arrow function, __화살표함수는 ❕부모❕함수❕의 this를 받는다..__
+🟩➡ arrow function, __화살표함수는 ❕부모❕함수❕의 this를 받는다..__
 ```js
 const obj ={
  name: 'hitu',
@@ -327,7 +327,6 @@ header.addEventListner('click',()=>{console.log(this)}) //addEventListner가 정
 `
 1. 화살표 함수는 부모의 this를 따라가고
 2. call을 못붙이며 무조건 실행되게 되어있음
-3. __화살표함수에 대한 추가적인 공부가 필요함... __
 
 
 * * *
@@ -376,7 +375,7 @@ const z = () => {};
 
 * * *
 ## 노드 교과서 개정판 promise, async와 await
-🤷 프로미스란? 내용은 실행 되었지만 결과를 아직 반환하지 않은 객체  
+🟥 프로미스란? 내용은 실행 되었지만 결과를 아직 반환하지 않은 객체  
 · 실행해놓고 필요할때 꺼내쓰면 됨💌  
 · then을 붙이면 결과를 반환함(성공리턴값: resolved) / (실패리턴값: reject => catch로 연결)  
 · 실행이 완료되지 않았으면 완료된 후에 Then 내부 함수가 실행됨  
@@ -400,7 +399,7 @@ function findAndSaveUser(users){
 프로미스는 위에서 아래로, 좌에서 우로 실행됨
 
 
-🤷 async(asynchronous[eɪˈsɪŋkrənəs]: 동시에 존재, 발생하지 않는) / await[əˈweɪt] (~을 기다리다)  
+🟧 async(asynchronous[eɪˈsɪŋkrənəs]: 동시에 존재, 발생하지 않는) / await[əˈweɪt] (~을 기다리다)  
 ➕ AJAX(Asynchronous Javascript And XML)) ❗발음 유의❗
 
 ```js
@@ -503,21 +502,22 @@ setTimeout(()=>{
 ```
 // a, b, c 출력
 
+🟥 순서  
 1. anonymous
 2. 첫번째 setTimeout 호출 후 빠져나감
 3. 두번째 setTimeout 호출 후 빠져나감
 4. 세번째 setTimeout 호출 후 빠져나감
 5. anonymous 빠져나감
 
-🔄[Event Loop](https://nodejs.org/ko/docs/guides/event-loop-timers-and-nexttick)
+🟧🔄[Event Loop](https://nodejs.org/ko/docs/guides/event-loop-timers-and-nexttick)
 
-### 👀제로초의 요약된 방식 -> 다음 세가지로 분석
+### 🟨제로초의 요약된 방식 -> 다음 세가지로 분석
 1. Background
 2. Macro task ✔
 3. micro task ✔  
 
 
-### 👀 Background란 ? 실제로 있는 개념이 아니라 제로초가 만든 추상적인 개념
+### 🟩👀 Background란 ? 실제로 있는 개념이 아니라 제로초가 만든 추상적인 개념
 1. 이 부분은 javascript가 아닌 javascript 엔진 또는 오히려 더 넓은 범위인 운영체제라고 생각하면 됨. 
 2. 이 Background의 특징은 다른언어( c++일수도있고  c일수도 있음. 즉, ✨동시에 돌아갈 수 있음)로 되어있는 부분이라고 볼 수 있음
 3. javascript는 싱글쓰레드이기때문에 동시의 개념이 없음
@@ -535,11 +535,11 @@ setTimeout(()=>{
 ## 2-3 한번 비동기는 영원한 비동기
 ### Macro task & micro task에는 각자 누가 들어가나❔❔
 
-✔ 1. micro task : Promise, process.nextTick
-✔ 2. Macro task : 그 외 나머지(setTimeout, eventListener ..)
+1. micro task : Promise, process.nextTick  
+2. Macro task : 그 외 나머지(setTimeout, eventListener ..)
  
  
-😶 Macro task & micro task에 각각 들어간다면?
+😶 Macro task & micro task에 각각 들어간다면?  
 1. 먼저 micro task 가 먼저 호출스택으로 끌어올림
 2. micro task가 꽉 차있으면 Macro task는 실행안됨❌
 
@@ -614,13 +614,112 @@ p.then((result) => {
 
 ***
 ## 개별 정리  
-### 호출과 선언의 차이 
-### 스코프 체인이란?
-### 호이스팅 최적화
-### this의 결정시기
-### promise란?
-### async, await란?
+### 1. Arrow Function 
+> 출처: [Arrow function은 function을 대체하는 신문법이 아님](https://codingapple.com/unit/es6-3-arrow-function-why/)  
 
+#### 🌚 기존의 함수를 만드는 방법
+```js
+function 함수(){
+
+}
+
+var 함수 = function(){
+
+}
+
+함수(); //함수실행
+````
+
+
+#### 🌝 함수를 만드는데에 있어서 es6의 편리한 문법: ➡Arrow Function⬅
+```js
+var 함수 = () => {
+
+}
+
+함수(); //함수실행
+```
+
+#### 🟥 함수 본연의 기능
+1. 코드들을 기능으로 묶고 싶을 때 사용
+2. **입출력 기계**를 만들고 싶을 때 사용  
+
+
+#### 🟧 Arrow Function의 장점👍  
+1. 입출력 기능을 만들때 직관적으로 볼 수 있음  
+1-1. 입출력 기능: `var 함수 = (a) => { return a + 10 }; 함수(5); //15출력`  
+2. 파라미터가 1개면 ? **소괄호** 생략가능 `var 함수 =  a => {return a +  10}`  
+3. 코드가 한줄 밖에 없다? **중괄호 & return**도 생략가능 `var 함수 =  a =>  a +  10`  
+
+
+#### 🟨 Arrow Function의 예시
+#### 1. forEach함수(반복문)
+```js
+[1,2,3,4].forEach(fucntion(a){
+  console.log(a); //1,2,3,4 출력
+})
+
+//➡Arrow Function
+[1,2,3,4].forEach( a => console.log(a);)  
+```  
+
+#### 2. 이벤트 리스너
+```js
+document.getElementById('버튼').addEventListener('click',
+  function(e){
+
+  }
+)
+
+
+//➡Arrow Function
+document.getElementById('버튼').addEventListener('click',(e) => {})
+//여기서 this를 사용하면 window
+```
+#### 3. object 안의 함수
+```js
+var 오브젝트 = {
+  함수 : function(){}
+}
+
+//➡Arrow Function
+var 오브젝트 = {
+  함수 : () => {}
+}
+```
+#### 🟩 Arrow Function의 특징  
+- 바깥에 있던 this값을 내부에서 그대로 사용, 함수 내의 this값을 변경시키지 않음  
+1. 일반 이벤트 리스너에선 `this == e.currentTarget`
+2. Arrow function 이벤트 리스너에선 `this == 바깥의 this값`  
+2-1. Arrow function 이벤트 리스너에서 e.currentTarget 사용하고 싶으면 e.currentTarget를 그대로 사용해서 쓰면 됨. this를 사용하지 않고...
+
+
+***
+### 호출과 선언의 차이 
+
+
+***
+### 스코프 체인이란?
+
+
+***
+### 호이스팅 최적화
+
+
+***
+### this의 결정시기
+
+
+***
+### promise란?
+> 출처: [자바스크립트 12. 프로미스 개념부터 활용까지 JavaScript Promise](https://youtu.be/JB_yU6Oe2eE)  
+#### 🟥 함수 본연의 기능
+
+
+
+***
+### async, await란?
+> 출처: [자바스크립트 13. 비동기의 꽃 JavaScript async 와 await 그리고 유용한 Promise APIs](https://youtu.be/aoQSOZfz3vQ)  
 
 |용어                  | 정의                        |
 |:--- | ---: |
