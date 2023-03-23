@@ -711,7 +711,7 @@ var 오브젝트 = {
 
 
 ***
-### promise란?
+## promise란?
 > 출처: [자바스크립트 12. 프로미스 개념부터 활용까지 JavaScript Promise](https://youtu.be/JB_yU6Oe2eE)  
 #### 🟥 promise란 ?
 - javascript안에 내장되어져 있는 object, 비동기 함수를 사용할때 callback함수 대신에 유용하게 쓸 수 있음 
@@ -723,7 +723,7 @@ var 오브젝트 = {
 - Producer  
 -- 원하는 기능을 수행해서 해당하는 데이터를 만들어냄, 즉 promise 의 object
 
-- Consummer  
+- Consumer  
 -- 원하는 데이터를 소비
 
 
@@ -781,7 +781,7 @@ promise
   })
 ```
 
-### 🟩 Promise Chaing
+#### 🟩 Promise Chaing
 ```js
 const fetchNumber =  new Promise((resolve, reject) => {
   setTimeout(()=> resolve(1),1000) //1초후 숫자 1을 전달하는 promise
@@ -798,7 +798,7 @@ fetchNumber
 .then(num => console.log(num)) //5
 ```
 
-### 🟦 Error Handling
+#### 🟦 Error Handling
 ```js
 //닭을 받아서 달걀을 받구 그 달걀로 후라이 해먹기
 const getHen = () =>
@@ -856,7 +856,7 @@ const cook = egg =>
 ```
 
 
-### 🟪callback hell To Promise
+#### 🟪callback hell To Promise
 callback hell
 ```js
 class UserStorage {
@@ -952,6 +952,101 @@ userStorage.loginUser(id, password)
 ***
 ### async, await란?
 > 출처: [자바스크립트 13. 비동기의 꽃 JavaScript async 와 await 그리고 유용한 Promise APIs](https://youtu.be/aoQSOZfz3vQ)  
+
+#### 🟥 async, await란?
+- promise를 간결, 간편하고 동기적으로 실행 되는 것처럼 보이게 함  
+-- 기존에 존재하는 promise 위에 조금더 간편한 api 제공 = syntactic sugar🍩  
+
+🌚 before
+```js
+function fetchUser(){
+  // 10초동안 네트워크 요청을 받는 코드라고 해보자
+  return 'hitu';
+}
+
+const user = fetchUser();
+console.log(user)
+
+//이렇게 동기적으로 이 코드를 실행하면 실행이 완료될때까지 사용자가 기다려야함😡
+```
+
+🤙promise
+```js
+function fetchUser(){
+  return new Promise((resolve, reject)=>{
+    return 'hitu';
+  })
+}
+
+const user = fetchUser();
+user.then(console.log)
+```
+
+
+👐🏼 async 
+```js
+async function fetchUser(){
+  return 'hitu';
+}
+
+const user = fetchUser();
+user.then(console.log)
+```
+
+✋🏼 await (async를 사용했을때만 사용가능)
+```js
+function delay(ms){
+  //정해진 ms초가 지나면 resolve를 호출
+  return new Promise(resolve => setTimeout(resolve, ms))
+}
+
+async function getApple(){
+  //await을 사용하게 되면 delay가 끝날때까지 기다려줌
+  await delay(1000) 
+  return '사과';
+};
+
+//동기적인 코드를 쓰는 '것'처럼 만들어두면 기다렸다가 return을 하니까 더 쉽게 이해할 수 있음
+async function getBanana(){
+  await delay(1000)
+  return '바나나';
+};
+
+/*
+🤙promise로 쓸 경우 : chaining
+
+function getBanana(){
+  return delay(1000)
+  .then(()=>'바나나') ;
+};
+
+*/
+
+
+//promise callback 지옥
+function pickFruits(){
+  return getApple()
+  .then(apple => {
+    return getBanana()
+    .then(banana => `${apple} + ${banana}`);
+  })
+}
+
+pickFruits().then(console.log) //사과 + 바나나 출력
+```
+
+
+👐🏼 async 사용할 경우
+```js
+async function pickFruits(){
+  const apple = await getApple();
+  const banana = await getBanana();
+  return `${apple} + ${banana}`;
+}
+pickFruits().then(console.log) //사과 + 바나나 출력
+
+```
+
 
 |용어                  | 정의                        |
 |:--- | ---: |
