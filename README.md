@@ -465,7 +465,7 @@ Promise.all([p1,p2,p3,p4,p5,p6]).then((results) => {})
 ```
 
 
-#### 😥 prnmiseAll의 단점 : 하나라도 오류나면 catch로 넘어간다
+#### 😥 promiseAll의 단점 : 하나라도 오류나면 catch로 넘어간다
 ```js
 Promise.all([p1,p2,p3,p4,p5,p6]).then((results) => {}).catch((error)=>{})
 ```
