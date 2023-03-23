@@ -1003,12 +1003,13 @@ function delay(ms){
 async function getApple(){
   //await을 사용하게 되면 delay가 끝날때까지 기다려줌
   await delay(1000) 
+  throw: 'error'; //error가 발생할 경우
   return '사과';
 };
 
 //동기적인 코드를 쓰는 '것'처럼 만들어두면 기다렸다가 return을 하니까 더 쉽게 이해할 수 있음
 async function getBanana(){
-  await delay(1000)
+  await delay(500)
   return '바나나';
 };
 
@@ -1039,12 +1040,65 @@ pickFruits().then(console.log) //사과 + 바나나 출력
 👐🏼 async 사용할 경우
 ```js
 async function pickFruits(){
-  const apple = await getApple();
-  const banana = await getBanana();
+  try{
+      const apple = await getApple();
+      const banana = await getBanana();
+  }catch(){
+    //error처리
+  }
   return `${apple} + ${banana}`;
 }
 pickFruits().then(console.log) //사과 + 바나나 출력
 
+```
+
+👭 await 병렬처리
+```js
+async function getApple(){
+  await delay(1000) 
+  throw 'error'; 
+  return '사과';
+};
+
+async function getBanana(){
+  await delay(1000)
+  return '바나나';
+};
+
+/*
+바나나와 사과를 받아오는데는 두개가 서로 연관이 없기때문에 
+사과 받아온뒤~ 바나나를 받아올 필요가 없음!! 
+즉, 병렬적 기능 수행
+*/
+async function pickFruits(){
+  //promise 즉시실행
+  const applePromise =  getApple();
+  const bananaPromise =  getBanana();
+
+  const apple = await applePromise;
+  const banana = await bananaPromise;
+  return `${apple} + ${banana}`;
+}
+pickFruits().then(console.log) //사과 + 바나나 출력
+/*
+```
+👭 await 병렬처리 more simple
+```js
+function pickAllFruits(){
+  return Promise.all([getApple(),getBanana()]);
+  .then(fruits => fruits.join('+')) //배열을 string으로 묶으려면 join 사용
+}
+
+pickAllFruits().then(console.log) //사과+바나나
+```
+
+🏃🏼‍♀️ 어떤것이든 상관없이 **먼저** 값을 리턴하는 과일만 받아오고 싶다 ??
+```js
+function pickOnlyOne(){
+  return Promise.race([getApple(),getBanana()]);
+}
+
+pickOnlyOne().then(console.log)  //바나나 출력
 ```
 
 
