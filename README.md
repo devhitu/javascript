@@ -713,8 +713,213 @@ var 오브젝트 = {
 ***
 ### promise란?
 > 출처: [자바스크립트 12. 프로미스 개념부터 활용까지 JavaScript Promise](https://youtu.be/JB_yU6Oe2eE)  
-#### 🟥 함수 본연의 기능
+#### 🟥 promise란 ?
+- javascript안에 내장되어져 있는 object, 비동기 함수를 사용할때 callback함수 대신에 유용하게 쓸 수 있음 
+- State  
+-- pending(우리가 지정한 오퍼레이션이 작동 중 일때)  
+-- fullfilled(완료한 상태)  
+-- rejected(파일을 찾을 수 없거나 네트워크에 문제가 생겼을때)  
 
+- Producer  
+-- 원하는 기능을 수행해서 해당하는 데이터를 만들어냄, 즉 promise 의 object
+
+- Consummer  
+-- 원하는 데이터를 소비
+
+
+#### 🟧 Producer 
+```js
+//promise는 class이기때문에 new라는 키워드를 이용해서 object 생성
+const promise =  new Promise((resolve, reject) => {
+    /* 
+    
+    doing some heavy work 
+    (ex). 네트워크에서 데이터를 받아오거나 큰 데이터를 읽어들일때 
+    동기적으로 받아오면 그 다음 라인의 코드가 실행되지 않기 때문에 시간이 걸리는 일들은 promise로 처리
+    
+    */
+
+   console.log('doing something') //바로 출력됨, promise를 만드는순간 콜백함수가 실행되기 때문
+});
+```
+✔ 이런 식으로 작성하게되면 바로 실행되기때문에 사용자가 요구하지않았는데도 ❌불필요한 통신❌이 일어날 수 있음  
+
+
+```js
+const promise =  new Promise((resolve, reject) => {
+  setTimeout(()=>{
+      resolve('hitu'); //성공시 받아온 데이터를 resovle를 통해서 출력
+      reject(new Error('no network')); //reject는 보통 Error라는 클래스를 통해서 전달
+  }, 2000)
+});
+```
+
+#### 🟨 Consummer : then, catch, finally
+```js
+promise.then((value)=>{
+  //value에 resolve 값이 전달 됨
+  console.log(value) //hitu 출력
+})
+```
+
+
+```js
+promise
+  //🌝 성공케이스 출력
+  .then(value=>{ //value에 resolve 값이 전달 됨
+    console.log(value) //hitu 출력
+  })
+
+  //🌚 Error 케이스 출력
+  .catch(error=>{
+    console.log(error) //Error: no network 출력
+  })
+
+  //🆕 성공/실패 상관없이 무조건 마지막에 호출됨
+  .finally(()=>{
+    console.log('finally')
+  })
+```
+
+### 🟩 Promise Chaing
+```js
+const fetchNumber =  new Promise((resolve, reject) => {
+  setTimeout(()=> resolve(1),1000) //1초후 숫자 1을 전달하는 promise
+})
+
+fetchNumber
+.then(num = > num*2) //1*2 = 2
+.then(num = > num*3) //2*3 = 6
+.then(num = > {
+  return new Promise((resolve, reject) => {
+    setTimeout(()=> resolve(num-1),1000)  //6-1=5
+  })
+})
+.then(num => console.log(num)) //5
+```
+
+### 🟦 Error Handling
+```js
+//닭을 받아서 달걀을 받구 그 달걀로 후라이 해먹기
+const getHen = () =>
+  new Promise((resolve, reject)=>{
+    setTimeout(()=>resolve('닭'), 1000)
+  });
+const getEgg = hen =>
+  new Promise((resolve, reject)=>{
+    setTimeout(()=>resolve(`${hen} => 달걀`), 1000)
+  });
+const cook = egg =>
+  new Promise((resolve, reject)=>{
+    setTimeout(()=>resolve(`${egg} => 후라이`), 1000)
+  });
+
+  /*
+  getHen()
+  .then(hen => getEgg(hen))
+  .then(egg => cook(egg))
+  .then(meal => console.log(meal));
+  */
+
+  //value 같을 경우 생략 가능
+  getHen()
+    .then(getEgg)
+    .then(cook)
+    .then(console.log);
+
+  // 닭 => 달걀 => 후라이 출력
+```
+
+만약 reject 발생시 
+```js
+const getHen = () =>
+  new Promise((resolve, reject)=>{
+    setTimeout(()=>resolve('닭'), 1000)
+  });
+const getEgg = hen =>
+  new Promise((resolve, reject)=>{
+    setTimeout(()=>reject(new Error(`${hen} => 달걀`)), 1000)
+  });
+const cook = egg =>
+  new Promise((resolve, reject)=>{
+    setTimeout(()=>resolve(`${egg} => 후라이`), 1000)
+  });
+
+  getHen()
+    .then(getEgg)
+    .catch(error =>{
+      return '베이컨' 
+      //계란을 받아오는건 실패했지만 베이컨을 대신 전달해줌, 즉 promise chain 이 실패하지 않고 전달해줌
+    })
+    .then(cook)
+    .then(console.log)
+```
+
+
+### 🟪callback hell To Promise
+callback hell
+```js
+class UserStorage {
+  loginUser(id, password, onSuccess, onError){
+    setTimeout(()=>{
+      if(
+        (id === 'hitu' && password ==="sophia")
+        (id === 'mega' && password ==="study")
+      ){
+        onSuccess(id);
+      } else {
+        onError(new Error('not found'));
+      }
+    },2000)
+  }
+
+  getRoles(user, onSuccess, onError){
+    setTimeout(()=>{
+      if(user === 'hitu'){
+        onSuccess({name:'hitu', role:"sawon"});
+      } else {
+        onError(new Error('no access'))
+      }
+    }, 1000)
+  }
+}
+
+const UserStorage = new userStorage();
+```
+
+Promise
+```js
+class UserStorage {
+  loginUser(id, password){
+    return new Promise((resolve, reject) =>{
+      setTimeout(()=>{
+        if(
+          (id === 'hitu' && password ==="sophia")
+          (id === 'mega' && password ==="study")
+        ){
+          resolve(id);
+        } else {
+          reject(new Error('not found'));
+        }
+      },2000)
+    })
+  }
+
+  getRoles(user){
+    return new Promise((resolve, reject) =>{
+    setTimeout(()=>{
+      if(user === 'hitu'){
+        onSuccess({name:'hitu', role:"sawon"});
+      } else {
+        onError(new Error('no access'))
+      }
+    }, 1000)      
+    })
+  }
+}
+
+const UserStorage = new userStorage();
+```
 
 
 ***
