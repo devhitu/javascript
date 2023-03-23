@@ -884,7 +884,27 @@ class UserStorage {
   }
 }
 
-const UserStorage = new userStorage();
+const userStorage = new UserStorage();
+const id = prompt('enter your id');
+const password = prompt('enter your password');
+
+userStorage.loginUser(
+  id,
+  password,
+  user =>{
+    userStorage.getRoles(
+      user,
+      userWithRole =>{
+        alert(
+          `Hello ${userWithRole.name}, you have a ${userWithRole.role} role`
+        );
+      },
+      error =>{
+        console.log(error)
+      }
+    )
+  }
+)
 ```
 
 Promise
@@ -907,18 +927,25 @@ class UserStorage {
 
   getRoles(user){
     return new Promise((resolve, reject) =>{
-    setTimeout(()=>{
-      if(user === 'hitu'){
-        onSuccess({name:'hitu', role:"sawon"});
-      } else {
-        onError(new Error('no access'))
-      }
-    }, 1000)      
+      setTimeout(()=>{
+        if(user === 'hitu'){
+          onSuccess({name:'hitu', role:"sawon"});
+        } else {
+          onError(new Error('no access'))
+        }
+      }, 1000)      
     })
   }
 }
 
-const UserStorage = new userStorage();
+const userStorage = new UserStorage();
+const id = prompt('enter your id');
+const password = prompt('enter your password');
+userStorage.loginUser(id, password)
+.then(userStorage.getRoles()) //user호출
+.then(user => alert(`Hello ${user.name}, you have a ${user.role} role`))
+.catch(console.log)
+
 ```
 
 
