@@ -67,17 +67,6 @@ function evenOrOdd2(num) {
     return num % 2 ? "Odd" : "Even"
 }
 
-/*나머지가 1이 되는 수 찾기 => 참고없이 내가 품^^*/
-function  reminderIs1(n) {
-    for(let i = 1; i<n; i++){
-        if (n%i == 1){
-            return Math.min(i) 
-        }     
-    }
-    return answer;
-}
-
-
 /* 문자열 내 p와 y의 개수 */
 function stringCompare(s){
     let change = s.toUpperCase();    
@@ -94,3 +83,26 @@ function numPY(s){
   }
   
 
+/*나머지가 1이 되는 수 찾기 => 참고없이 내가 품^^*/
+function  reminderIs1(n) {
+    for(let i = 1; i<n; i++){
+        if (n%i == 1){
+            return Math.min(i) 
+        }     
+    }
+    return answer;
+}
+
+
+/*정수 제곱근 판별*/
+function positiveRoot(n) {
+    //Math.sqrt(3) % 1 = 0.732 출력 => 양의 정수가 아님
+    let root = Math.sqrt(n)
+    return root % 1 == 0 ? (root+1)**2 : -1;
+}
+
+
+/*자연수 뒤집어 배열로 만들기*/
+function solution(n) {
+    return String(n).split('').reverse().map((data)=> Number(data))
+}
