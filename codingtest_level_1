@@ -67,7 +67,30 @@ function evenOrOdd2(num) {
     return num % 2 ? "Odd" : "Even"
 }
 
-/*나머지가 1이 되는 수 찾기*/
-function remainder(n) {
-
+/*나머지가 1이 되는 수 찾기 => 참고없이 내가 품^^*/
+function  reminderIs1(n) {
+    for(let i = 1; i<n; i++){
+        if (n%i == 1){
+            return Math.min(i) 
+        }     
+    }
+    return answer;
 }
+
+
+/* 문자열 내 p와 y의 개수 */
+function stringCompare(s){
+    let change = s.toUpperCase();    
+    let check_p = change.split("P").length;
+    let check_y = change.split("Y").length;
+    
+    return check_p == check_y ? true : false; //p,y가 하나도 없을때도 0개로 같으므로 true 
+}
+
+//어느 천재의 풀이....
+function numPY(s){
+    //함수를 완성하세요
+      return s.toUpperCase().split("P").length === s.toUpperCase().split("Y").length;
+  }
+  
+
