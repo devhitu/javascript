@@ -106,3 +106,5 @@ function positiveRoot(n) {
 function solution(n) {
     return String(n).split('').reverse().map((data)=> Number(data))
 }
+
+/*정수 내림차순으로 배치하기*/
