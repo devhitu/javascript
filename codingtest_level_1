@@ -109,5 +109,6 @@ function reverseArray(n) {
 
 /*정수 내림차순으로 배치하기*/
 function descendingNumber(n) {
+    //join으로 배열을 정수로 변환
     return +String(n).split('').map((data)=> Number(data)).sort().reverse().join("")
 }
