@@ -103,8 +103,11 @@ function positiveRoot(n) {
 
 
 /*자연수 뒤집어 배열로 만들기*/
-function solution(n) {
+function reverseArray(n) {
     return String(n).split('').reverse().map((data)=> Number(data))
 }
 
 /*정수 내림차순으로 배치하기*/
+function descendingNumber(n) {
+    return +String(n).split('').map((data)=> Number(data)).sort().reverse().join("")
+}
