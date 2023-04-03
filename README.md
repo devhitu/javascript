@@ -605,6 +605,96 @@ p.then((result) => {
 ```
 ***
 ## 2-5 async와 await, promise로 바꾸기 
+```js
+p.then((result)=>{
+  console.log('result', result);
+  return 1
+}).then((result)=>{
+    console.log(result) //1 출력
+}).then((result)=>{
+    console.log(result) //undefined 출력 
+    //왜? undefined 출력? 함수는 return안적어 놓으면 기본적으로 undefined
+}).then(()=>{
+  
+}).then(()=>{
+  
+}).catch(()=>{
+  //전체 then에 대해서 그중 하나라도 에러났을경우 catch로 이동
+}).finally(()=>{
+
+})
+```
+
+✔ 굳이 catch를 아래 쓸 필요없음  
+then - catch, then - catch, then - catch .... 이렇게 빼서 사용해도 됨
+```js
+//setTimeout을 Promise로 만들기
+function delayP(ms){
+  return new Promise((resolve, reject)=>{
+    setTimeout(resolve, ms);
+    reject(err)
+  })
+}
+async function a(){
+  //따로 처리할때
+  try{
+    await delayP(1000)
+  }catch(error){
+    console.log(error)
+  }
+
+  //함께 처리할때
+  try{
+    await delayP(1000)
+    await delayP(1000)
+    await delayP(1000)
+    await delayP(1000)
+    await delayP(1000)
+  }catch(error){
+    console.error(error)
+  }
+}
+```
+
+```js
+async function a(){
+  const a = await 1;
+  const b = await Promise.resolve(1);
+}
+```
+```js
+async function a(){
+  const a = await 1;
+  console.log('a',a)
+  console.log('gglgl')
+  await null;
+  const b = await Promise.resolve(1);
+  console.log('b',b)
+}
+
+
+//바꿔보기
+/*
+  1.일단 await이 기준임 => await이 then이다
+  2. async의 해석은 우에서 좌, 반면 promise는 위에서 아래로
+*/
+Promise.resolve(1)
+  .then((a) =>{
+    console.log('a',a)
+    console.log('gglgl')
+    return null
+  }).then(() =>{
+    
+  }).then((b) =>{
+    
+  })
+```
+
+주의할점  
+<img src="/img/2_5_img1.jpg">  
+다음 await이 나올 때 까지 작성 => null은 return에 넣어줌
+
+
 ***
 ## 2-6 무지성 await 연달아쓰기 금지
 ***
