@@ -181,8 +181,24 @@ function collatz(num) {
     return num == 1 ? answer : -1;
 }
 
-/*서울에서 김서방 찾기*/
+/*서울에서 김서방 찾기
+    seoul이란 배열에는 Jane, Kim등등이 있는데 거기서 Kim의 위치를 찾는 문제*/
 function whereIsKim(seoul) {
     var answer = seoul.indexOf('Kim');
     return `김서방은 ${answer}에 있다`
+}
+
+/*나누어 떨어지는 숫자 배열*/
+function solution(arr, divisor) {
+    var answer = [];
+    let arrLength = arr.length;
+    for(let i=1; i <= arrLength; i++){
+        if(arr[i] % divisor == 0){
+            return answer.push(i)
+        }else if(divisor > arr[i]){
+            return -1
+        }        
+    }
+    //arr배열에서 하나씩 뽑아와서 나눠
+    //나머지가 0이면 뽑아온값들을 푸쉬
 }
