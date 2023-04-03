@@ -670,6 +670,7 @@ async function a(){
   await null;
   const b = await Promise.resolve(1);
   console.log('b',b)
+  return b
 }
 
 
@@ -684,13 +685,14 @@ Promise.resolve(1)
     console.log('gglgl')
     return null
   }).then(() =>{
-    
+    return Promise.resolve(1);
   }).then((b) =>{
-    
+    console.log('b',b);
+    return b
   })
 ```
 
-주의할점  
+✔ 주의할점  
 <img src="/img/2_5_img1.jpg">  
 다음 await이 나올 때 까지 작성 => null은 return에 넣어줌
 
