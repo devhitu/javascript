@@ -112,3 +112,34 @@ function descendingNumber(n) {
     //join으로 배열을 정수로 변환
     return +String(n).split('').map((data)=> Number(data)).sort().reverse().join("")
 }
+
+/*문자열을 정수로 바꾸기*/
+function changeNumber(s) {
+    return Number(s)
+}
+
+//어느 천재의 풀이....
+function strToInt(str){
+    //연산이 되면서 문자가 자동으로 정수로 파싱됨 
+    return str/1
+}
+
+/*하샤드 수 ...chat gpt가 풀어줌..*/
+//x가 12일때
+function harshadNumber(x) {
+  let sum = 0;
+  let strNum = String(x); //12
+  for (let i = 0; i < strNum.length; i++) { //strNum.length = 2
+    //parseInt 문자열을 숫자로 1+2 => 3
+    //charAt i번째 문자를 반환 1, 2 반환
+    sum += parseInt(strNum.charAt(i));
+  }
+
+  // 나누어 떨어지는지 확인합니다.
+  return x % sum === 0; //12%3=0
+}
+
+//어느 천재의 풀이....
+function Harshad(n){
+    return !(n % (n + "").split("").reduce((a, b) => +b + +a ));
+  }
