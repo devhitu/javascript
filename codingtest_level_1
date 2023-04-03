@@ -192,9 +192,9 @@ function whereIsKim(seoul) {
 function solution(arr, divisor) {
     var answer = [];
     let arrLength = arr.length;
-    for(let i=1; i <= arrLength; i++){
+    for(let i=0; i <= arrLength; i++){
         if(arr[i] % divisor == 0){
-            return answer.push(i)
+            return answer.push(arr[i])
         }else if(divisor > arr[i]){
             return -1
         }        
