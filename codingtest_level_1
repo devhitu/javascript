@@ -134,12 +134,39 @@ function harshadNumber(x) {
     //charAt i번째 문자를 반환 1, 2 반환
     sum += parseInt(strNum.charAt(i));
   }
-
-  // 나누어 떨어지는지 확인합니다.
   return x % sum === 0; //12%3=0
 }
-
 //어느 천재의 풀이....
 function Harshad(n){
     return !(n % (n + "").split("").reduce((a, b) => +b + +a ));
-  }
+}
+
+/*두 정수 사이의 합*/
+function Gauss(a, b) {
+    //가우스공식
+    return (a+b) * (Math.abs(b-a)+1)/2;
+}
+//어느 천재의 풀이....
+function adder(a, b, s = 0){
+    for (var i = Math.min(a, b); i <= Math.max(a, b); i++) s += i;
+    return s;
+}
+
+/*콜라츠 추측*/
+function collatzConjecture(num) {
+    let answer = 0;
+    
+    while(num != 1){
+        if(num%2==0){   
+            num = num/2
+        }else{
+            num = num*3+1
+        }          
+        answer += 1;
+    }
+    if(answer >= 500){
+        return -1;
+    }else{
+        return answer;
+    }
+}
