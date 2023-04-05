@@ -728,6 +728,8 @@ async function a(){
   await Promise.allSettled([p1,p2]); //Promise 2개가 background에 넘어가서 동시에 실행
   await delayP(9000)
   //total 15초 걸림
+  
+  
   /*
     🕑 Promise의 시간의 흐름:  
     실행은 바로 ----> 결괏값이 나올 때는 나중 ----> 결괏값을 사용할 때는 더 나중  
@@ -735,9 +737,119 @@ async function a(){
 }
 ```
 
+😎 예를 들어 게시글 조회 코드를 짠다고 하자
+```js
+async createPost(){
+  await db.getPost(); //게시물 조회
+  if(post){
+    res.status(403).send('이미 게시글이 존재합니다.')
+  }else{ 
+    await db.createPost(); //게시글 작성
+    const p1 = db.userIncrementPostCount(); //사용자에 게시글 카운트 1 올림
+    const p2 = db.createNoti(); //새로운 게시글 작성 완료 알림
+    await Promise.allSettled([p1,p2]); 
+  }
+}
 
+/*
+  await 을 쭉 나열하기보단, 
+  순차적으로 할 필요없는 코드는 Promise정리!!!
+*/
+```
+
+😫 Promise로 못바꾸는 경우
+```js
+async function c(){
+  const a =  await 1;
+  const b =  await 2;
+  return a + b
+}
+
+//원래는 promise로 못바꿈❌
+//generator function으로 바꿈
+Promise.resolve(1);
+  .then((a)=>{
+    return 2
+  })
+  .then((b)=>{
+    /*
+      이건 안됨 scope가 달라서.. 
+      generator에서는 동일한 scope를 제공하기 때문에 가능하다👀  
+    */
+    return a + b 
+  })
+  
+
+
+//즉시 실행 함수로 가능하게는 할 수 있음..⭕
+(function (){
+  let a;
+  let b;
+  Promise.resolve(1);
+    .then((a)=>{
+      return 2
+    })
+    .then((b)=>{
+      /*
+        이건 안됨 scope가 달라서.. 
+        generator에서는 동일한 scope를 제공하기 때문에 가능하다👀  
+      */
+      return a + b 
+    })
+)()
+```
 ***
 ## 2-7 프로미스 다양한 활용 
+```js
+async function b(){
+  await p1 = delayP(3000)
+  await p2 = delayP(6000)
+  await Promise.allSettled([p1,p2]); 
+  await delayP(9000)
+}
+
+new Promise((resolve, reject) => {
+  const p1 = delayP(3000)
+  const p2 = delayP(6000)
+  return Promise.allSettled([p1,p2]); 
+})
+
+  .then(()=>{
+    return delayP(9000)
+  })
+  
+```
+
+```js
+const p1 = axios.get('서버주소')
+const p2 = axios.get('서버주소')
+const p3 = axios.get('서버주소')
+...
+
+
+await Promise.all([p1, p2, ... p12])
+await Promise.all([p13, p4, ... p24])
+```
+✔ 단 allSettled 같은 거 사용할때,  
+브라우저에서 서버에 요청을 보낼 수 있는양이 정해져 있음(maybe..12개?)  
+그래서 완전히 동시에 보낼 순 없고 한 묶음별로 보낸다고 이해  
+🤙 안정성을 위해서라면 묶음으로 끊어서 보내면 됨  
+
+👀 map 쓰는 경우
+```js
+const result = await Promise.all([p1,p2,p3])
+
+result.map(async()=>{
+  await result조작(); //p1,p2,p3 동시에(js에서 동시라는 개념은 없지만 여기서 동시에란 소리는 backgroud에서 이뤄지는 것을 말함)
+},[])
+
+for(let result of results){
+  await result조작(); //p1,p2,p3 순서대로
+}
+```
+[그림판 그려보기](https://youtu.be/JG2DPt00bXs?list=PLcqDmjxt30Rt9wmSlw1u6sBYr-aZmpNB3&t=478)
+
+
 ***
 ## 2-8 클로저(closure) 분석
 
