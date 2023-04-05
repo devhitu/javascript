@@ -188,36 +188,56 @@ function whereIsKim(seoul) {
     return `김서방은 ${answer}에 있다`
 }
 
-/*나누어 떨어지는 숫자 배열 ing.....*/
-function solution(arr, divisor) {
-    var answer = [];
-    let arrLength = arr.length;
-    for(let i=0; i <= arrLength; i++){
-        if(arr[i] % divisor == 0){
-            return answer.push(arr[i])
-        }else if(divisor > arr[i]){
-            return -1
-        }        
-    }
-    //arr배열에서 하나씩 뽑아와서 나눠
-    //나머지가 0이면 뽑아온값들을 푸쉬
-}
-function solution(arr, divisor) {
+/*나누어 떨어지는 숫자 배열*/
+function divisorSorting(arr, divisor) {
     var answer = [];
     for(i=0; i<arr.length; i++) {
       if(arr[i] % divisor == 0) {
         answer.push(arr[i]);
       }
     }
+
+    //나누어 떨어지는게 없을 때
     if(answer.length == 0) {
       answer.push(-1);
     }
+
     /*
-        array.sort() => 파라미터 값을 입력하지 않으면 '유니코드 순서'에 따라 정렬함, 즉 [1,10,2,3]이런식으로 정렬됨
-        즉, 파라미터는 a - b이 양값이면 return 1, 음값이면 -1, 같으면 0을 출력함
+        array.sort() => 파라미터 값을 입력하지 않으면 '유니코드 순서'에 따라 정렬함, 즉 [1,10,2,3] 이런 식으로 정렬됨
+        즉, 파라미터는 a - b이 ★양값이면 앞뒤 자리가 바뀜★ 음값이면 자리가 바뀌지 않음
         
-        오름차순의 경우 (a,b) => a - b 으로 연산, 양값만 출력
+        오름차순의 경우 (a,b) => a - b 
+        내림차순의 경우 (a,b) => b - a 
     */
-    answer.sort((a,b) => a - b);
-    return answer;
+    return answer.sort((a,b) => a - b);
+}
+
+//어느 천재의 풀이....
+function divisorSorting2(arr, divisor) {
+    var answer = arr.filter(v => v%divisor == 0);
+    return answer.length == 0 ? [-1] : answer.sort((a,b) => a-b);
+}
+
+/*핸드폰 번호 가리기 => 내가 품*/
+function phoneNumHide(phone_number) {
+    let phoneArrLeng = phone_number.length - 4;
+    
+    //문자열을 배열로
+    let phoneArr = String(phone_number).split('').map(item => item)
+    
+    for(let i = 0; i<phoneArrLeng; i++){
+        phoneArr[i] = "*"
+    }
+    
+    //배열을 문자열로
+    return phoneArr.join('')
+}
+
+//어느 천재의 풀이....
+function hide_numbers(s){
+    /*
+        정규표현식(Regular Expressin)
+        
+    */
+    return s.replace(/\d(?=\d{4})/g, "*");
 }
