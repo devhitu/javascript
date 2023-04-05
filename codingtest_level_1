@@ -243,16 +243,23 @@ function hide_numbers(s){
 function plusTF(absolutes, signs) {
     let answer = 0;
     for(let i = 0; i<absolutes.length; i++){
-        if(signs[i]===false){
-            answer = answer - absolutes[i];
-        }else{
-            answer = answer + absolutes[i];
-        }
+        // if(signs[i]===false){
+        //     answer = answer - absolutes[i];
+        // }else{
+        //     answer = answer + absolutes[i];
+        // }
+        signs[i] ? answer += absolutes[i] : answer -= absolutes[i]
     }   
     return answer
 }
 
 //어느 천재의 풀이....
 function plusTF2(absolutes, signs) {
+    /*
+        내가 생각한 로직 : signs false, true를 판단해서 문자열처럼 붙이려고함...ㅋ.
+        어느 천재의 로직 :reduce쓰면 인덱스값이 같으므로 굳이 for문 안돌림, 1,-1 판별을 삼항연산자로 잡고 '곱해버리는'........
+
+        reduce보단 for이 빠르다는데 한줄로 쓰는게 왜케 멋져보일까..ㅠ
+    */ 
     return absolutes.reduce((acc, val, i) => acc + (val * (signs[i] ? 1 : -1)), 0);
 }
