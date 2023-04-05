@@ -236,8 +236,8 @@ function phoneNumHide(phone_number) {
 //어느 천재의 풀이....
 function hide_numbers(s){
     /*
-        정규표현식(Regular Expressin)
-        
+        정규표현식(Regular Expressin): 문자열에서 특정 내용을 찾거나 대체, 유효성 검사 시 사용
+        ("문자열").replace(/정규표현식/, "대체문자열")
     */
-    return s.replace(/\d(?=\d{4})/g, "*");
+    return s.replace(/\d(?=\d{4})/g, "*");      
 }
