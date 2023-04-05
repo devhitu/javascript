@@ -202,3 +202,22 @@ function solution(arr, divisor) {
     //arr배열에서 하나씩 뽑아와서 나눠
     //나머지가 0이면 뽑아온값들을 푸쉬
 }
+function solution(arr, divisor) {
+    var answer = [];
+    for(i=0; i<arr.length; i++) {
+      if(arr[i] % divisor == 0) {
+        answer.push(arr[i]);
+      }
+    }
+    if(answer.length == 0) {
+      answer.push(-1);
+    }
+    /*
+        array.sort() => 파라미터 값을 입력하지 않으면 '유니코드 순서'에 따라 정렬함, 즉 [1,10,2,3]이런식으로 정렬됨
+        즉, 파라미터는 a - b이 양값이면 return 1, 음값이면 -1, 같으면 0을 출력함
+        
+        오름차순의 경우 (a,b) => a - b 으로 연산, 양값만 출력
+    */
+    answer.sort((a,b) => a - b);
+    return answer;
+}
