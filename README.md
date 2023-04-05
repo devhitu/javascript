@@ -699,6 +699,43 @@ Promise.resolve(1)
 
 ***
 ## 2-6 무지성 await 연달아쓰기 금지
+😫 promise를 async로 바꿀때 많은 사람들이 하는 실수 : await을 줄줄이 쓴다...  
+=> 이럴 경우 낭패 볼 수 있음
+```js
+function delayP(ms){
+  return new Promise((resolve, reject) => {
+    setTimeout(resolve,ms)
+  })
+}
+async function a(){
+  await delayP(3000)
+  await delayP(6000)
+  await delayP(9000)
+  //total 18초 걸림;;
+}
+```
+
+✨ allSettled 사용  
+```js
+function delayP(ms){
+  return new Promise((resolve, reject) => {
+    setTimeout(resolve,ms)
+  })
+}
+async function a(){
+  await p1 = delayP(3000)
+  await p2 = delayP(6000)
+  await Promise.allSettled([p1,p2]); //Promise 2개가 background에 넘어가서 동시에 실행
+  await delayP(9000)
+  //total 15초 걸림
+  /*
+    🕑 Promise의 시간의 흐름:  
+    실행은 바로 ----> 결괏값이 나올 때는 나중 ----> 결괏값을 사용할 때는 더 나중  
+  */
+}
+```
+
+
 ***
 ## 2-7 프로미스 다양한 활용 
 ***
