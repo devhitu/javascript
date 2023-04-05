@@ -221,14 +221,11 @@ function divisorSorting2(arr, divisor) {
 /*핸드폰 번호 가리기 => 내가 품*/
 function phoneNumHide(phone_number) {
     let phoneArrLeng = phone_number.length - 4;
-    
     //문자열을 배열로
     let phoneArr = String(phone_number).split('').map(item => item)
-    
     for(let i = 0; i<phoneArrLeng; i++){
         phoneArr[i] = "*"
     }
-    
     //배열을 문자열로
     return phoneArr.join('')
 }
@@ -240,4 +237,22 @@ function hide_numbers(s){
         ("문자열").replace(/정규표현식/, "대체문자열")
     */
     return s.replace(/\d(?=\d{4})/g, "*");      
+}
+
+/*음양 더하기*/
+function plusTF(absolutes, signs) {
+    let answer = 0;
+    for(let i = 0; i<absolutes.length; i++){
+        if(signs[i]===false){
+            answer = answer - absolutes[i];
+        }else{
+            answer = answer + absolutes[i];
+        }
+    }   
+    return answer
+}
+
+//어느 천재의 풀이....
+function plusTF2(absolutes, signs) {
+    return absolutes.reduce((acc, val, i) => acc + (val * (signs[i] ? 1 : -1)), 0);
 }
