@@ -903,6 +903,7 @@ a();// 1,2,3,4 출력
 
 <img src="/img/2_8_img1.jpg">  
 🟧 var로 실행해봤을 때 그려보기  
+
 1. 호출스택에 호출  
 2. 선언지도  
 2-1. var의 경우 block scope를 따르지 않고 ***함수scope***를 따름. 즉, fuction a를 따른다  
