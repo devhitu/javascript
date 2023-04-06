@@ -852,6 +852,83 @@ for(let result of results){
 
 ***
 ## 2-8 클로저(closure) 분석
+1.  클로저 문제 => 스코프, 비동기, var
+2. 클로저가 문제다 => ❌
+3. 클로저를 사용해서 해결하는 문제
+4. for문(반복문)과 비동기를 함께 사용하면 종종 발생
+ 
+ ```js
+function a(){
+  for(var i = 0; i<5; i++>){ //i가 4일때까지는 true인데 i가 5가되면서 5<5 false
+    setTimeout(()=>{
+      console.log(i)
+    },i*1000)//0 1000 2000 3000 4000
+  }
+}
+a(); // 5 5 5 5 출력
+
+
+//해결법
+//1. 즉시실행함수로 출력
+function a(){
+  for(var i = 0; i<5; i++>){
+    (function(j){
+      setTimeout(()=>{
+        console.log(i)
+      },i*1000) 
+    })(i)
+  }
+}
+a(); // 1,2,3,4 출력
+
+
+
+
+//2. var을 ✨let으로 바꿈
+function a(){
+  for(let i = 0; i<5; i++>){ 
+    setTimeout(()=>{
+      console.log(i)
+    },i*1000)
+  }
+}
+a();// 1,2,3,4 출력
+
+ ```
+😫 문제점: for과 var의 문제  
+=> 해결법  
+1. 즉시실행함수로 클로저 생성  
+2. let
+
+
+🟧 var로 실행해봤을 때 그려보기
+1. 호출스택에 호출
+2. 선언지도  
+2-1. var의 경우 block scope를 따르지 않고 ***함수scope***를 따름. 즉, fuction a를 따른다
+3. 호출스택에 setTimeout 호출  
+3-1. 호출할때마다 background에 timeout이 생성됨  
+3-2. for문돌면서 setTimeout이 끝남  
+3-3. a함수, Annonymos도 끝남(= 호출스택에서 빠짐)  
+4. 호출스택이 텅비게 되니까 이벤트루프가 하나씩 끌어올려줌  
+4-1. 그전에 앞서 background는 조건이 만족하면(timeout이 0초 지나면..) 콜백함수를 큐로 보냄  
+4-2. 그다음 큐에서 호출스택에 올림
+5. 비동기: ()=> 익명의 함수에서 i에 접근할수있는지 거슬러 올라가면 var=i는 이미 실행되어 5가 되어있음
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ***
 ## 개별 정리  
@@ -945,6 +1022,7 @@ var 오브젝트 = {
 
 ***
 ### 호이스팅 최적화
+
 
 
 ***
@@ -1191,7 +1269,8 @@ userStorage.loginUser(id, password)
 
 
 ***
-### async, await란?
+
+## async, await란?
 > 출처: [자바스크립트 13. 비동기의 꽃 JavaScript async 와 await 그리고 유용한 Promise APIs](https://youtu.be/aoQSOZfz3vQ)  
 
 #### 🟥 async, await란?
@@ -1341,6 +1420,48 @@ function pickOnlyOne(){
 
 pickOnlyOne().then(console.log)  //바나나 출력
 ```
+
+## Closure 란?
+> 출처: [자바스크립트 중급 강좌 #11 클로저(Closure) 5분만에 이해하기](https://youtu.be/tpl2oXQkGZs)  
+
+자바스크립트란 어휘적환경(Lexical Environment)을 갖음  
+코드가 실행되면 스크립트내에서 선언한 변수들이 Lexical환경에 올라간다  
+
+🟥ex.1
+```js
+//2. 외부환경에서 one을 찾음
+let one;
+one = 1;
+
+function addOne(num){
+  console.log(one+num)
+}
+
+// 1. num값은 받았지만 one은 함수 내부에 없어
+addOne(5);
+```
+
+🟧ex.2
+```js
+//makeAdder, add3은 전역 Lexical환경에 들어감
+function makeAdder(x){
+  return function(y){
+    return x + y;
+  }
+}
+
+const add3 = makeAdder(3); //makeAdder실행되고 x값을 부여받음
+console.log(add3(2)) //y가 2로 들어감
+
+const add10 = makeAdder(10);
+console.log(add10(5))  //15
+console.log(add2(1)) //4
+```
+=> 함수와 렉시컬 환경의 조합을 클로저라고 함  
+<span style="color:red">함수가 생성될 당시의 외부 변수를 기억</span>
+
+
+
 
 
 |용어                  | 정의                        |
