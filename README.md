@@ -122,17 +122,58 @@ __FIFO__ : FIRST IN FIRST OUT __선입선출__
 1.  호출에 따라 벽돌쌓듯 차곡차곡 호출시 **선언**으로 가서 스택에 쌓임
 2.  함수가 __}__ 끝날때마다 스택을 빠져나감
 
-
 👀 빠져나가는 걸 보는 방법 => **debugger** 에서 Call stack 확인
 
 
-➕ 추가공부
-[자바스크립트 강좌 11-5. 호출 스택과 이벤트 루프](https://youtu.be/XkOxLB7MCIk?t=249)
+➕ 추가공부  
+🟥 [자바스크립트 강좌 11-5. 호출 스택과 이벤트 루프](https://youtu.be/XkOxLB7MCIk?t=249)
 
 <img src="/img/1_3_img1.jpg">  
-`console.trace();`는 함수의 호출스택 기록해주는 메서드  
-쌓일때는 아래서부터 쌓이고 끝나면 위에서부터 빠져나감
 
+`console.trace();` 는 함수의 호출스택 기록해주는 메서드  
+쌓일때는 아래서부터 쌓이고 끝나면 위에서부터 빠져나감  
+
+
+🟧 [노드교과서 개정판 2-1. 호출 스택 알아보기](https://youtu.be/-oGCpA7pxxs?t=88)  
+```js
+function first(){
+    second();
+    console.log('1')
+}
+function second(){
+    third();
+    console.log('2')
+}
+function third(){
+    console.log('3')
+}
+first(); // 3 2 1
+```
+<img src="/img/1_3_img2.jpg">  
+
+= 🥔프링글스 통의 감자칩처럼!!! 🍟  
+아래에서부터 쌓이고 먹을때는 위에서부터 빠져나가(실행)
+
+
+✔ 그럼 **setTimeout**의 경우는 비동기이기때문에 호출스택만으로 설명이 안됨
+```js
+function run(){
+  console.log('삐빅 비동기')
+};
+console.log('start')
+setTimeout(run, 3000)
+console.log('end')
+```
+<img src="/img/1_3_img3.jpg">  
+
+🟩1.annoy, console.log, setTimeout, console.log 순서대로 실행후 console출력후 호출스택을 나감  
+setTimeout의 경우 내부 run함수가 메모리에 저장되며 백그라운드로 넘어감  
+🟦2. annoy도 호출스택을 나가서 호출스택이 **비워짐**  
+🟪3. 호출스택이 비워졌음으로 태스크큐에있던 런함수가 호출스택으로 올라감(실행)  
+콘솔창에 출력후 나감
+
+
+🍬백그라운드의 좋은 점: 코드가 백그라운드에 가면 호출스택이랑 동시에 코드실행됨  
 * * *
 
 
@@ -178,6 +219,11 @@ a-> x2
 //즉, a에선 b에 접근할 수 없음
 ```
 
+📃 용어정리
+1. call stack : 호출스택 함수들을 호출하고 실행하는 공간 
+2. background : timer, eventListener와 같은 함수
+3. task queue : background에 있는 함수들의 call back 함수
+4. event loop : 호출스택이 비어있을 때 tasck queue에서 꺼내서 call stack으로 올림
 
 * * *
 
