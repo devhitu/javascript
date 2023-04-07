@@ -124,6 +124,15 @@ __FIFO__ : FIRST IN FIRST OUT __선입선출__
 
 
 👀 빠져나가는 걸 보는 방법 => **debugger** 에서 Call stack 확인
+
+
+➕ 추가공부
+[자바스크립트 강좌 11-5. 호출 스택과 이벤트 루프](https://youtu.be/XkOxLB7MCIk?t=249)
+
+<img src="/img/1_3_img1.jpg">  
+`console.trace();`는 함수의 호출스택 기록해주는 메서드  
+쌓일때는 아래서부터 쌓이고 끝나면 위에서부터 빠져나감
+
 * * *
 
 
