@@ -158,7 +158,7 @@ first(); // 3 2 1
 ✔ 그럼 **setTimeout**의 경우는 비동기이기때문에 호출스택만으로 설명이 안됨
 ```js
 function run(){
-  console.log('삐빅 비동기')
+  console.log('비동기 삐빅')
 };
 console.log('start')
 setTimeout(run, 3000)
@@ -174,6 +174,34 @@ setTimeout의 경우 내부 run함수가 메모리에 저장되며 백그라운�
 
 
 🍬백그라운드의 좋은 점: 코드가 백그라운드에 가면 호출스택이랑 동시에 코드실행됨  
+
+
+😎 조금 더 복잡한 예시
+```js
+function oneMore(){
+  console.log('one more')
+}
+function run(){
+  console.log('run run')
+  setTimeout(()=>{
+    console.log('wow')
+  },0);
+  new Promise((resolve)=>{
+    resolve('hi')
+  })
+  .then(console.log);
+  oneMore()
+}
+setTimeout(run, 5000) //run run one more hi wow
+```
+<img src="/img/1_3_img4.jpg">  
+
+
+1. Promise에서 `new Promise((resolve)=>{resolve('hi')})` <= 여기까지는 동기임  
+then을 만나는 순간 **비동기**가 됨
+2. background에 함수 여러개가 있으면 누가 먼저 실행될지는 모름  
+2-1. 근데 **Promise**는 타이머가있으면 새치기함🏃🏼‍♀️🏃🏼‍♀️🏃🏼‍♀️
+
 * * *
 
 
