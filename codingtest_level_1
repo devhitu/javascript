@@ -263,3 +263,48 @@ function plusTF2(absolutes, signs) {
     */ 
     return absolutes.reduce((acc, val, i) => acc + (val * (signs[i] ? 1 : -1)), 0);
 }
+
+/*제일 작은 수 제거하기*/
+function withoutMin(arr) {
+    /*
+        array.indexOf(제일 작은 수, 검색 시작 위치) => 제일 작은 수의 인덱스값
+        splice 해당 인덱스값 자르기
+    */
+    arr.splice(arr.indexOf(Math.min(...arr)),1);
+    if(arr.length<1)return[-1];
+    return arr;
+}
+
+/*없는 숫자 더하기 => 내가 품*/
+function emtyNumSum(numbers) {
+    let GausSum = 45 
+    let totalSum = 0;
+    
+    for(let i = 0; i<numbers.length; i++){
+        totalSum += numbers[i]
+    }
+    return  GausSum - totalSum
+}
+
+//어느 천재의 풀이....
+function emtyNumSum2(numbers) {
+    return 45 - numbers.reduce((cur, acc) => cur + acc, 0); //reduce함수 활용
+}
+
+function emtyNumSum3(numbers) {
+    let answer = 0;
+    for(let i = 0; i <= 9; i++) {
+        if(!numbers.includes(i)) answer += i; //i를 포함하지 않으면 더 해
+    }
+    return answer;
+}
+
+
+/*가운데 글자 가져오기*/
+//s를 각각 분리해서 인덱스 갯수가 홀수인경우 짝수인경우
+//홀수인경우 5/2=2.5 의 올림값
+//짝수인경우 6/2= 3 3,4값
+function solution(s) {
+    let split = s.split('')
+    console.log(split)
+}
