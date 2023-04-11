@@ -1,7 +1,7 @@
 /*
-LEVEL 1.
+LEVEL 1. 정답률 높은 순(87~83%) 20제
 
-230329~
+230329 ~ 230410
 */
 
 /*평균 구하기*/
@@ -13,7 +13,7 @@ function averageMachine(arr) {
 const array = [3,4,5,6,7,8,10];
 array.reduce((a,b) => a+b) //배열.reduce((누적값, 현잿값, 인덱스, 요소) => { return 결과 }, 초깃값);
 
-//자릿수 더하기
+/*자릿수 더하기*/
 function digitsSum(digits) {
     /*
     toString : 문자열로 변환
@@ -299,15 +299,3 @@ function emtyNumSum3(numbers) {
     return answer;
 }
 
-
-/*가운데 글자 가져오기*/
-//s를 각각 분리해서 인덱스 갯수가 홀수인경우 짝수인경우
-//홀수인경우 5/2=2.5 의 올림값
-//짝수인경우 6/2= 3 3,4값
-function solution(s) {
-    let split = s.split('')
-    console.log(split)
-}
-https://youtu.be/JtrOxaTvOEM
-https://youtu.be/4Y5_kxXolIs
-https://youtu.be/9xJ1jeKPoFE
