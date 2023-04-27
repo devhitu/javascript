@@ -5,10 +5,62 @@ LEVEL 1. 정답률 높은 순(83~68%) 20제
 */
 
 /*가운데 글자 가져오기*/
-//s를 각각 분리해서 인덱스 갯수가 홀수인경우 짝수인경우
-//홀수인경우 5/2=2.5 의 올림값
-//짝수인경우 6/2= 3 3,4값
-function solution(s) {
-    let split = s.split('')
-    console.log(split)
+function bringCenter(s) {
+    //s를 각각 분리해서 배열 요소의 갯수가 홀수인경우 짝수인경우
+    if(s.length%2==0){
+        //짝수인경우 6/2= 3 3,4값
+        answer = s[s.length/2 - 1] + s[s.length/2]
+    }else{
+        //홀수인경우 5/2=2.5 의 올림값
+        answer = s[Math.floor(s.length/2)]
+    }
+    return answer
 }
+
+/*수박수박수박수박수박수? => 내가 품!! */
+function watermelonClap(n) {
+    return n%2!=0 ? '수박'.repeat(Math.floor(n/2))  + '수': answer ='수박'.repeat(n/2)
+}
+
+//어느 천재의 풀이
+const waterMelon = n => "수박".repeat(n).slice(0,n);
+
+/* 내적 => 내가 품!!  */
+function Scala(a, b) {
+    let answer = 0
+    for(let i = 0; i<=a.length-1; i++){
+        answer += a[i]*b[i]
+    }
+    return answer
+}
+//어느 천재의 풀이
+function Scala2(a, b) {
+    var answer = a.reduce((acc, cur, idx) => acc += cur*b[idx], 0)
+    return answer;
+}
+
+/*문자열 내림차순으로 배치하기*/
+function descendingStr(s) {
+    return s.split('').sort().reverse().join('');
+}
+
+/*약수의 개수와 덧셈*/
+//어느 천재의 풀이
+function solution(left, right) {
+    var answer = 0;
+    for (let i = left; i <= right; i++) {
+        /*
+            ** 제곱근이 정수면 약수의 개수는 홀수 !!
+            isInteger 정수 판별 
+            sqrt 루트값
+        */
+        if (Number.isInteger(Math.sqrt(i))) {  
+            answer -= i;
+        } else {
+            answer += i;
+        }
+    }
+    return answer;
+}
+
+/* 부족한 금액 계산하기 */

@@ -274,6 +274,14 @@ function withoutMin(arr) {
     if(arr.length<1)return[-1];
     return arr;
 }
+/*
+추가공부 : 깊은복사(deep copy)와 얕은복사(shallow copy)
+
+1. 깊은복사(deep copy) => 새로운 메모리 공간을 확보하여 완전히 복사(원본유지)
+2. 얕은복사(shallow copy) => 참조 타입 데이터가 저장한 '메모리 주소 값'을 복사 (원본변형)
+
+✔ 객체를 깊은복사하고 싶을때? `let copy = {...source}` ...문법사용
+*/
 
 /*없는 숫자 더하기 => 내가 품*/
 function emtyNumSum(numbers) {
