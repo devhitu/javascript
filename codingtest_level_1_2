@@ -78,4 +78,25 @@ function beSortofMoney(price, money, count) {
 }
 
 
-/*문자열 다루기 기본*/
+/*문자열 다루기 기본 => 내가 품*/
+function StrFindNum(s) {  
+    let answer;
+    if(s.length === 4 || s.length === 6){
+        answer = s.includes('e') || s.includes('E') ? false : Number.isInteger(s/1)  
+    }else{
+        return false
+    }
+    return answer
+}
+
+/*행렬의 덧셈*/
+function solution(arr1, arr2) {
+    var answer = [[]];
+    for (var i=0; i<arr1.length; i++){
+        answer[i] =[];
+        for(var j=0; j<arr1[i].length; j++){
+            answer[i].push(arr1[i][j] + arr2[i][j]);
+        }
+    }
+    return answer;
+}
