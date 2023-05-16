@@ -143,6 +143,7 @@ function lcm(minNum, maxNum){
   return minNum * maxNum / gcd(minNum, maxNum);
 }
 
+//다른 풀이
 var r;
 for(var ab= a*b;r = a % b;a = b, b = r){}
 return [b, ab/b];
