@@ -113,3 +113,33 @@ process.stdin.on('data', data => {
     }
 
 });
+
+/*최대공약수와 최소공배수*/
+
+//     var minNum = Math.min(n,m) 
+//     var maxNum = Math.max(n,m) 
+    
+//     for(let i = 2; i<=minNum; ++i){
+//         if((maxNum%i)===0 && (minNum%i)===0) {
+//             return [i *= i,minNum*Math.floor(maxNum/i)]      
+//             console.log(i.length)
+//         }
+//         else if((maxNum%i)!==0)return [1,minNum*maxNum]
+//     }
+function solution(n, m) {
+    let answer = [];
+    let minNum = Math.min(n, m);
+    let maxNum = Math.max(n, m);
+    answer[0] = gcd(minNum, maxNum);
+    answer[1] = lcm(minNum, maxNum);
+    return answer;
+}
+// 최대공약수
+function gcd(minNum, maxNum){
+  return (minNum % maxNum) === 0 ? maxNum : gcd(maxNum, minNum % maxNum);
+}
+// 최소공배수
+function lcm(minNum, maxNum){
+  return minNum * maxNum / gcd(minNum, maxNum);
+}
+
