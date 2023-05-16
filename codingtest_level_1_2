@@ -143,7 +143,9 @@ function lcm(minNum, maxNum){
   return minNum * maxNum / gcd(minNum, maxNum);
 }
 
-//다른 풀이
+//다른 풀이 유클리드 호제법
 var r;
 for(var ab= a*b;r = a % b;a = b, b = r){}
 return [b, ab/b];
+
+/*같은 숫자는 싫어*/
