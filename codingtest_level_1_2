@@ -149,3 +149,39 @@ for(var ab= a*b;r = a % b;a = b, b = r){}
 return [b, ab/b];
 
 /*같은 숫자는 싫어*/
+function solution(arr)
+{
+    var answer = [];
+    for(let i = 0; i<=arr.length; i++){
+        if(arr[i] !== arr[i+1]){
+             answer.push(arr[i])
+        }  
+    }
+    return answer
+
+    //어느천재의 풀이
+    return arr.filter((val,index) => val != arr[index+1]);
+}
+
+/*3진법 뒤집기*/
+function solution(n) {
+    ///parseInt와-Number의-차이
+    //https://velog.io/@blackwidow/parseInt%EC%99%80-Number%EC%9D%98-%EC%B0%A8%EC%9D%B4
+     var reverseTernary  = n.toString(3).split('').reverse().join('') //3진법 거꾸로 ex."0021"    
+     return parseInt(reverseTernary, 3) //문자열을 숫자로 변환
+}
+
+/*이상한 문자 만들기*/
+function solution(s) {
+    for(let i = 1; i<=s.length; i++){
+        if(i%2==0){
+            console.log(s[i])
+            // s[i].toUpperCase();
+        }else if(i%2==1){
+            // s[i].toLowerCase();
+        }else{ //공란일경우
+            s[i]
+        }
+    }
+    return s;
+}
