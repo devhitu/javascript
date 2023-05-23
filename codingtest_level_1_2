@@ -173,15 +173,26 @@ function solution(n) {
 
 /*이상한 문자 만들기*/
 function solution(s) {
-    for(let i = 1; i<=s.length; i++){
-        if(i%2==0){
-            console.log(s[i])
-            // s[i].toUpperCase();
-        }else if(i%2==1){
-            // s[i].toLowerCase();
-        }else{ //공란일경우
-            s[i]
+    let answer = '';
+    let words = s.split(' ');
+    console.log(words.length)
+    for (let i = 0; i < words.length; i++) {
+        for(let j = 0; j < words[i].length; j++) {
+            j % 2 === 0 ? answer += words[i][j].toUpperCase() : answer += words[i][j].toLowerCase();
+        }
+        
+        /* 띄어쓰기 words.length는 2(3-1)
+           i가 0일때 < words.length
+           i가 1일때 < words.length
+           i가 2일때 = words.length
+           i가 3일때 > words.length 
+           
+           즉, words의 사이에 공란을 넣어줌 */
+        if (i < words.length -1) { 
+            answer += ' ';
         }
     }
-    return s;
+    return answer;    
 }
+
+/*예산*/
